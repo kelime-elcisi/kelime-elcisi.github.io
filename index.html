@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masallardan Yarına: Yaşayan Kelime Hazinemiz | Kelime Elçisi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --kraft-bg: #e6d3b3;
+      --kraft-card: #fdfaf5;
+      --kraft-dark: #5d4037;
+      --kraft-medium: #8d6e63;
+      --accent-orange: #c85a32;
+      --accent-green: #4e7d56;
+      --text-dark: #2b2523;
+      --border-tan: #bcaaa4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', 'Segoe UI', sans-serif;
+      background-color: var(--kraft-bg);
+      background-image: 
+        radial-gradient(rgba(93, 64, 55, 0.06) 1px, transparent 0),
+        radial-gradient(rgba(93, 64, 55, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* ÜST KAPAK (HERO) ALANI */
+    header {
+      background: linear-gradient(135deg, #5d4037 0%, #3e2723 100%);
+      color: #fdfaf5;
+      text-align: center;
+      padding: 45px 20px 35px;
+      border-bottom: 6px dashed #d7ccc8;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .badge-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .badge {
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .badge.highlight {
+      background-color: var(--accent-orange);
+      border-color: #ffab91;
+      color: #fff;
+    }
+
+    header h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      color: #ffe0b2;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p.subtitle {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      font-size: 1.05rem;
+      color: #efebe9;
+      opacity: 0.95;
+    }
+
+    .header-actions {
+      margin-top: 15px;
+    }
+
+    .btn-about {
+      background-color: #fdfaf5;
+      color: var(--kraft-dark);
+      border: 2px solid #d7ccc8;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-about:hover {
+      background-color: #ffe0b2;
+      transform: translateY(-2px);
+    }
+
+    /* ARAMA VE HARF FİLTRESİ */
+    .controls-wrapper {
+      max-width: 1140px;
+      margin: -25px auto 25px;
+      padding: 0 16px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .controls-box {
+      background-color: var(--kraft-card);
+      border: 2px solid var(--kraft-medium);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(93, 64, 55, 0.12);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      font-size: 1.05rem;
+      font-family: inherit;
+      border: 2px solid var(--border-tan);
+      border-radius: 10px;
+      background-color: #fff;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--accent-orange);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--kraft-medium);
+    }
+
+    .word-counter {
+      font-weight: 800;
+      color: var(--kraft-dark);
+      background-color: #efebe9;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      border: 1px dashed var(--kraft-medium);
+    }
+
+    .alphabet-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .letter-btn {
+      background-color: #efebe9;
+      border: 1.5px solid var(--border-tan);
+      color: var(--kraft-dark);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .letter-btn:hover {
+      background-color: #d7ccc8;
+    }
+
+    .letter-btn.active {
+      background-color: var(--accent-orange);
+      color: #fff;
+      border-color: var(--accent-orange);
+      transform: scale(1.06);
+    }
+
+    /* KELİME KARTLARI IZGARASI */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .dictionary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 22px;
+    }
+
+    .word-card {
+      background-color: var(--kraft-card);
+      border: 2px dashed var(--kraft-medium);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(93, 64, 55, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      scroll-margin-top: 30px;
+    }
+
+    .word-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(93, 64, 55, 0.15);
+    }
+
+    .word-card:target, .word-card.highlighted {
+      border: 3px solid var(--accent-orange);
+      background-color: #fff8f0;
+      box-shadow: 0 0 0 5px rgba(200, 90, 50, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px dotted var(--border-tan);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .word-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.65rem;
+      color: var(--kraft-dark);
+      letter-spacing: 1px;
+    }
+
+    .word-type {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--kraft-medium);
+      background-color: #efebe9;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+
+    .definition {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #212121;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .quotes-box {
+      background-color: #f5efe6;
+      border-left: 4px solid var(--accent-orange);
+      padding: 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.94rem;
+      margin-bottom: 16px;
+    }
+
+    .quote-item {
+      margin-bottom: 8px;
+    }
+
+    .quote-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .quote-label {
+      font-weight: 800;
+      color: #8d5531;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid #efebe9;
+    }
+
+    .btn-audio {
+      flex: 1;
+      background-color: var(--accent-green);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-audio:hover {
+      background-color: #3b6342;
+    }
+
+    .btn-audio.pending {
+      background-color: #a1887f;
+      cursor: pointer;
+    }
+
+    .btn-share {
+      background-color: #efebe9;
+      color: var(--kraft-dark);
+      border: 1px solid var(--border-tan);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: background-color 0.2s;
+    }
+
+    .btn-share:hover {
+      background-color: #d7ccc8;
+    }
+
+    /* MODAL (VİDEO VE ÖNSÖZ PENCERESİ) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 20, 15, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--kraft-card);
+      border: 3px dashed var(--kraft-dark);
+      border-radius: 16px;
+      max-width: 650px;
+      width: 100%;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: var(--kraft-dark);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.75rem; }
+      .dictionary-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-container">
+      <span class="badge">📚 Yaşayan Sözlük Tasarım Yarışması</span>
+      <span class="badge highlight">🕊️ Rumuz: Kelime Elçisi</span>
+      <span class="badge">📅 Basım Yılı: 2026</span>
+    </div>
+    <h1>MASALLARDAN YARINA: YAŞAYAN KELİME HAZİNEMİZ</h1>
+    <p class="subtitle">
+      “Sözcüklerimiz geçmişten geleceğe uzanan bir köprüdür.”<br>
+      Klasik eser okumalarından hareketle hazırlanan el yapımı, keçe tasarımlı ve sesli sözlük portalı.
+    </p>
+    <div class="header-actions">
+      <button class="btn-about" onclick="openAboutModal()">📜 Önsöz ve Teşekkür Yazısını Oku</button>
+    </div>
+  </header>
+
+  <div class="controls-wrapper">
+    <div class="controls-box">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Kelime, anlam veya kitap adı ara... (Örn: Otağ, Dede Korkut, Heybe)" oninput="filterWords()">
+        </div>
+        <div class="word-counter" id="wordCounter">Toplam 45 Kelime</div>
+      </div>
+      <div class="alphabet-bar" id="alphabetBar"></div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="dictionary-grid" id="dictionaryGrid"></div>
+  </main>
+
+  <!-- VİDEO / SESLİ ANLATIM MODALI -->
+  <div class="modal-overlay" id="videoModal" onclick="closeVideoModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeVideoModal()">✕</button>
+      <h2 id="modalWordTitle" style="font-family:'Fredoka',sans-serif; color:var(--kraft-dark);"></h2>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ÖNSÖZ VE TEŞEKKÜR MODALI -->
+  <div class="modal-overlay" id="aboutModal" onclick="closeAboutModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeAboutModal()">✕</button>
+      <h2 style="font-family:'Fredoka',sans-serif; color:var(--accent-orange); margin-bottom:12px;">BİR TEŞEKKÜR...</h2>
+      <p style="margin-bottom:12px;">
+        Kelimelerin büyülü dünyasında, masalların izinde çok güzel bir yolculuğa çıktım. Eski zamanların izini sürüp, dilimizin zenginliklerini bu sözlükte bir araya getirdim. Ancak bu zorlu ama bir o kadar da eğlenceli yolculukta yalnız değildim. Bana yardım eden harika bir ekibim vardı!
+      </p>
+      <p style="margin-bottom:12px;">
+        Videoları çekerken, o harika sayfaların tasarımlarını planlarken ve bana her adımda yol gösterirken en büyük desteği veren canım abime,
+      </p>
+      <p style="margin-bottom:12px;">
+        Fikirleriyle sözlüğümüze renk katan ve her zaman yanımda olan sevgili ablama,
+      </p>
+      <p style="margin-bottom:16px;">
+        Makasla, yapıştırıcıyla ve renkli keçelerle uğraşırken sabırla bana yardım eden, her zaman beni destekleyip cesaretlendiren canım anneme ve babama... Sonsuz teşekkür ederim. İyi ki varsınız!
+      </p>
+      <div style="text-align:right; font-weight:800; color:var(--kraft-dark);">
+        Rumuz: Kelime Elçisi<br>
+        <span style="font-size:0.85rem; color:var(--kraft-medium);">2026</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Masallardan Yarına: Yaşayan Kelime Hazinemiz © 2026 | Rumuz: <strong>Kelime Elçisi</strong><br>
+    <span style="font-size:0.85rem; font-weight:normal;">Keçiören Şehit Fırat Bulut İlkokulu - Yaşayan Sözlük Tasarım Yarışması Eseri</span>
+  </footer>
+
+  <script>
+    // YOUTUBE OYNATMA LİSTESİ VEYA KANAL LİNKİNİZİ BURAYA YAZABİLİRSİNİZ (Tek tek link girilmeyen kelimeler buraya yönlenir)
+    const GENEL_YOUTUBE_PLAYLIST_URL = ""; 
+
+    // 45 KELİMENİN TAM LİSTESİ (Sözlük.pdf dosyasından birebir aktarılmıştır)
+    // İpucu: Her kelimenin YouTube linkini "videoUrl" tırnaklarının içine yapıştırabilirsiniz.
+    const wordsData = [
+      {
+        id: "alacali",
+        word: "ALACALI",
+        letter: "A",
+        type: "Sıfat",
+        definition: "Birkaç rengi olan, karışık renkli, çok renkli ve benekli olan.",
+        source: "Yalnız Efe - Ömer Seyfettin",
+        quote: "Köyün kenarındaki patikada, alacalı inekler ve kuzular yeşil otların arasında neşeyle yayılıyor, çan sesleri her yana dağılıyordu.",
+        sentence: "Masalda gördüğüm alacalı kuş rengârenk kanatlarıyla çok güzel görünüyordu.",
+        videoUrl: ""
+      },
+      {
+        id: "anayurt",
+        word: "ANA YURT",
+        letter: "A",
+        type: "İsim",
+        definition: "İlk yaşanılan, çok sevilen ve savunulan anavatan.",
+        source: "İlk Namaz - Ömer Seyfettin",
+        quote: "Göçmen kuşlar, sonbahar rüzgârları esmeye başlayınca sıcak iklimlere doğru uçtular; ama bahar gelince yine doğdukları anayurtlarına döneceklerdi.",
+        sentence: "Masallardaki kahramanlar, ana yurtlarını korumak için el ele verip büyük bir mücadele vermişler.",
+        videoUrl: ""
+      },
+      {
+        id: "bereket",
+        word: "BEREKET",
+        letter: "B",
+        type: "İsim",
+        definition: "Bolluk, gürlük, verimlilik ve bitmez tükenmezlik hâli.",
+        source: "Dede Korkut Hikâyeleri",
+        quote: "Yüce dağların başından sular çağlayıp aksın, ovalarımız yeşersin; obamızdan bolluk, soframızdan bereket hiç eksik olmasın.",
+        sentence: "Annemin yaptığı sıcacık ekmeklerin kokusu evimize bereket getirdi.",
+        videoUrl: ""
+      },
+      {
+        id: "bilge",
+        word: "BİLGE",
+        letter: "B",
+        type: "İsim / Sıfat",
+        definition: "Bilgi ve görgüsüyle insanlara yol gösteren, çok okuyan, akıllı kimse.",
+        source: "Ezop Masalları",
+        quote: "Ormandaki hayvanlar ne zaman çözemedikleri bir sorunla karşılaşsalar, ulu çınar ağacında yaşayan yaşlı ve bilge baykuşa danışırlardı.",
+        sentence: "Sınıfımızdaki en bilge kişi öğretmenimizdir.",
+        videoUrl: ""
+      },
+      {
+        id: "comert",
+        word: "CÖMERT",
+        letter: "C",
+        type: "Sıfat",
+        definition: "Parasını, malını veya her şeyini esirgemeden bolca veren, eli açık.",
+        source: "Masallar",
+        quote: "Keloğlan'ın elinde bir somun ekmeği vardı ama gönlü çok zengindi; cömert davranıp ekmeğini yaşlı yolcuyla bölüştü, ikisinin de yüzü güldü.",
+        sentence: "Masaldaki cömert bey, köydeki tüm çocuklara hediyeler dağıttı.",
+        videoUrl: ""
+      },
+      {
+        id: "cadir",
+        word: "ÇADIR",
+        letter: "Ç",
+        type: "İsim",
+        definition: "Bez, keçe veya kıl dokumadan yapılan, taşınabilir barınak.",
+        source: "İki Yıl Okul Tatili - Jules Verne",
+        quote: "Çocuklar, fırtınadan ve yağmurdan korunmak için ağaçların arasındaki güvenli açıklığa el birliğiyle sağlam bir bez çadır kurdular.",
+        sentence: "Yaylaya gittiğimizde, çobanların kurduğu çadırları merakla inceledim.",
+        videoUrl: ""
+      },
+      {
+        id: "cikrik",
+        word: "ÇIKRIK",
+        letter: "Ç",
+        type: "İsim",
+        definition: "Kuyudan su çekmeye veya iplik eğirmeye yarayan, silindir biçimindeki dönen araç.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Bahçenin ortasındaki taş kuyunun çıkrığını koluyla çevirdikçe, serin sularla dolu kova ağır ağır yukarı çıktı.",
+        sentence: "Bahçedeki kuyunun çıkrığını çevirerek kovayı yukarıya çekmek çok eğlenceliydi.",
+        videoUrl: ""
+      },
+      {
+        id: "dirlik",
+        word: "DİRLİK",
+        letter: "D",
+        type: "İsim",
+        definition: "Düzen, huzur, barış içinde yaşama ve geçim durumu.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Köyün insanları sevinçte de tasada da hep bir aradaydı; aralarındaki bu güzel dirlik sayesinde hiçbir zorluk onları yıldırmazdı.",
+        sentence: "Babam, ailemizdeki dirlik ve huzurun her şeyden önemli olduğunu söyler.",
+        videoUrl: ""
+      },
+      {
+        id: "diyar",
+        word: "DİYAR",
+        letter: "D",
+        type: "İsim",
+        definition: "Ülke, memleket, dünya, yaşanılan yer.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Keloğlan az gitmiş uz gitmiş, dere tepe düz gitmiş; sonunda kuşların neşeyle öttüğü, ağaçların dört mevsim çiçek açtığı masal gibi bir diyara varmış.",
+        sentence: "Masallardaki kahramanlar, bilinmeyen diyarlara doğru heyecan dolu bir yolculuğa çıkmışlar.",
+        videoUrl: ""
+      },
+      {
+        id: "elci",
+        word: "ELÇİ",
+        letter: "E",
+        type: "İsim",
+        definition: "Bir devleti başka bir devlet katında temsil eden veya birinden birine haber götüren kişi.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Uzak ülkelerin padişahından gelen elçi, elindeki altın mühürlü mektubu ve dostluk hediyelerini sununca sarayda büyük bir sevinç yaşandı.",
+        sentence: "Masalda, komşu ülkenin elçisi padişaha değerli hediyeler getirmiş.",
+        videoUrl: ""
+      },
+      {
+        id: "erdem",
+        word: "ERDEM",
+        letter: "E",
+        type: "İsim",
+        definition: "İnsanın sahip olabileceği dürüstlük, yardımseverlik ve adalet gibi tüm iyi ve güzel ahlaki nitelikler.",
+        source: "Mesnevi'den Seçme Hikâyeler - Mevlana",
+        quote: "Güneş gibi şefkatli, toprak gibi alçakgönüllü olmak; iyiliği karşılık beklemeden yapmak insanın kalbini güzelleştiren en büyük erdemdir.",
+        sentence: "Masallardaki bilge dede, çocuklara en büyük erdemin dürüst olmak olduğunu anlatıyordu.",
+        videoUrl: ""
+      },
+      {
+        id: "ferman",
+        word: "FERMAN",
+        letter: "F",
+        type: "İsim",
+        definition: "Padişahın ya da hükümdarın verdiği, uyulması zorunlu olan yazılı emir.",
+        source: "Tarihî Hikâyeler - Ömer Seyfettin",
+        quote: "Hükümdar, fırtınadan zarar gören köylere hemen yardım edilmesi ve kimsenin açıkta bırakılmaması için saraydan bir ferman çıkardı.",
+        sentence: "Masaldaki padişah, ülkesindeki herkese mutlu yaşamaları için bir ferman göndermiş.",
+        videoUrl: ""
+      },
+      {
+        id: "gecit",
+        word: "GEÇİT",
+        letter: "G",
+        type: "İsim",
+        definition: "Dağlar veya engeller arasında geçmeye yarayan dar ve doğal yol.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Küçük kahraman, sarayın bahçesindeki sarmaşıkların arkasında gizli bir geçit buldu; bu taş koridor onu doğrudan ışıklar içindeki kütüphaneye çıkardı.",
+        sentence: "Masaldaki kervan, dağların arasındaki gizli geçitten geçerek güvenle şehre vardı.",
+        videoUrl: ""
+      },
+      {
+        id: "gerdanlik",
+        word: "GERDANLIK",
+        letter: "G",
+        type: "İsim",
+        definition: "Boyna takılan, değerli taşlar veya boncuklarla süslü kolye.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Padişah, iyiliksever prensese teşekkür etmek için tanyeri gibi parlayan elmaslarla süslü görkemli bir gerdanlık hediye etti.",
+        sentence: "Masaldaki prenses, kendisine armağan edilen elmas gerdanlığı boynuna takınca çok sevindi.",
+        videoUrl: ""
+      },
+      {
+        id: "hakan",
+        word: "HAKAN",
+        letter: "H",
+        type: "İsim",
+        definition: "Eski Türk devletlerinde en büyük hükümdar, han, kağan.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Masaldaki adil hakan, sabah erkenden halkın dertlerini dinlemek için tahtına oturur, ülkesindeki herkesin hakça yaşamasını sağlardı.",
+        sentence: "Masallardaki güçlü hakan, halkının barış ve huzur içinde yaşaması için adaletle hükmederdi.",
+        videoUrl: ""
+      },
+      {
+        id: "heybe",
+        word: "HEYBE",
+        letter: "H",
+        type: "İsim",
+        definition: "Omuza veya binek hayvanların sırtına asılan, genellikle kıldan, yünden veya kumaştan yapılmış çift gözlü torba.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Uzun yoldan gelen derviş, sırtındaki ipek dokumalı heybesini yere indirip açtı; içinden çıkardığı küçük hediyeleri çocuklara sevgiyle dağıttı.",
+        sentence: "Masaldaki kervancı, heybesinden çıkardığı taze ekmekleri ve meyveleri çocuklarla paylaştı.",
+        videoUrl: ""
+      },
+      {
+        id: "irmak",
+        word: "IRMAK",
+        letter: "I",
+        type: "İsim",
+        definition: "Büyük akarsu, nehir.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Padişahın sarayının yanında pırıl pırıl akan ırmak, güneşin altında gümüş gibi parlıyor, kıyısında neşeyle oynayan çocukların sesleri yankılanıyordu.",
+        sentence: "Masaldaki küçük çocuk, ırmağın kenarında oturup suyun sesini dinlemeyi çok severdi.",
+        videoUrl: ""
+      },
+      {
+        id: "ibret",
+        word: "İBRET",
+        letter: "İ",
+        type: "İsim",
+        definition: "Yaşanan kötü bir olaydan veya durumdan ders çıkarma, uyanma.",
+        source: "Dede Korkut Hikâyeleri",
+        quote: "Görüp bilene ibret, bilmeyene dert olsun; her hata bir ders, her söz bir öğüt olsun.",
+        sentence: "Masaldaki bencil devin başına gelenler, herkese ibret olacak cinstendi.",
+        videoUrl: ""
+      },
+      {
+        id: "imece",
+        word: "İMECE",
+        letter: "İ",
+        type: "İsim",
+        definition: "Birçok kişinin el birliğiyle, yardımlaşarak bir işi birlikte yapması.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Bütün köy imece kurup koca kuleyi yeniden inşa etmek için tuğla taşıdılar; birlikten kuvvet doğduğunu gülerek kutladılar.",
+        sentence: "Köydeki herkes imece usulüyle toplanıp kışlık odunları ve hazırlıkları neşeyle tamamladı.",
+        videoUrl: ""
+      },
+      {
+        id: "kandil",
+        word: "KANDİL",
+        letter: "K",
+        type: "İsim",
+        definition: "İçine sıvı yağ ve fitili konularak yakılan eski bir aydınlatma aracı.",
+        source: "Dede Korkut Hikâyeleri",
+        quote: "Gecenin karanlığında kandiller yakıldı, obanın içi ve yollar ışıkla aydınlandı.",
+        sentence: "Masaldaki küçük çocuk, elindeki kandille karanlık dehlizleri aydınlatarak gizli geçidi aradı.",
+        videoUrl: ""
+      },
+      {
+        id: "kervan",
+        word: "KERVAN",
+        letter: "K",
+        type: "İsim",
+        definition: "Uzak yollara giden yük hayvanları ve yolcular topluluğu.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Çölün ortasında ilerleyen kervan, günlerce süren yolculuğun ardından nihayet güvenli bir handa konakladı.",
+        sentence: "Masaldaki kervan, develerine yüklediği ipekleri ve baharatları uzak ülkelere götürmek için yola çıkmıştı.",
+        videoUrl: ""
+      },
+      {
+        id: "kurultay",
+        word: "KURULTAY",
+        letter: "K",
+        type: "İsim",
+        definition: "Önemli devlet işlerini ve kanunları konuşup karara bağlamak için yapılan büyük meclis, toplantı.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Ülkenin dört bir yanından gelen ak sakallı ihtiyar bilginler, halkın sorunlarına çare bulmak için büyük kurultay çadırında bir araya geldiler.",
+        sentence: "Masaldaki hakan, ülkedeki sorunları çözmek ve yeni kurallar koymak için büyük bir kurultay topladı.",
+        videoUrl: ""
+      },
+      {
+        id: "liman",
+        word: "LİMAN",
+        letter: "L",
+        type: "İsim",
+        definition: "Gemilerin dalgalardan korunarak sığınmasına, yük indirip bindirmesine uygun doğal veya yapay kıyı yeri.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Uzak ülkelerden gelen tüccar gemileri güvenli limana demir attı; kaptan getirdiği renkli ipekleri ve baharatları halka tanıttı.",
+        sentence: "Masaldaki tüccarlar, uzak ülkelerden gelen gemileri karşılamak için limanda heyecanla bekliyordu.",
+        videoUrl: ""
+      },
+      {
+        id: "menzil",
+        word: "MENZİL",
+        letter: "M",
+        type: "İsim",
+        definition: "Yolculukta varılması hedeflenen yer, ulaşılan amaç veya iki konak arasındaki mesafe.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Cesur kahraman, elindeki sihirli haritada yazan menzile ulaşabilmek için günlerce dağları, ormanları ve nehirleri aştı.",
+        sentence: "Masaldaki yolcular, fırtına çıkmadan önce dağların arkasındaki menzillerine ulaşmak için acele ediyordu.",
+        videoUrl: ""
+      },
+      {
+        id: "mujde",
+        word: "MÜJDE",
+        letter: "M",
+        type: "İsim",
+        definition: "Sevinç uyandıracak, beklenen veya iyi bir haber.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Köye gelen güzel haberin müjdesini vermek için çocuklar sokaklarda koşarak bütün komşulara bu tatlı haberi ulaştırdılar.",
+        sentence: "Masaldaki elçi, padişaha zafer müjdesini getirdiğinde bütün sarayda büyük bir sevinç yaşandı.",
+        videoUrl: ""
+      },
+      {
+        id: "nasihat",
+        word: "NASİHAT",
+        letter: "N",
+        type: "İsim",
+        definition: "Bir kimseye yapması veya yapmaması gereken şeyler için verilen iyi niyetli öğüt.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Masaldaki bilge ihtiyar, yola çıkacak olan gençlere her zaman dürüst, adil ve cesur olmalarını nasihat etti.",
+        sentence: "Dedem bana sabırlı olmam için nasihat etti.",
+        videoUrl: ""
+      },
+      {
+        id: "oba",
+        word: "OBA",
+        letter: "O",
+        type: "İsim",
+        definition: "Göçebe hanelerin, çadırların oluşturduğu topluluk veya bu topluluğun konakladığı yer.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Ulu dağların yamacındaki yeşil ovaya kurulan obada, akşamüzeri yanan neşeli ateşin etrafında masallar anlatılırdı.",
+        sentence: "Masalda, yüksek dağların yamacındaki geniş düzlüğe kurulmuş büyük bir oba vardı.",
+        videoUrl: ""
+      },
+      {
+        id: "otag",
+        word: "OTAĞ",
+        letter: "O",
+        type: "İsim",
+        definition: "Eskiden hükümdarların veya boy beylerinin konakladığı; büyük, süslü ve gösterişli çadır.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Yaylaya çıktığımızda ulu beylerin kurduğu görkemli otağları ve üzerindeki altın işlemeli sancakları merakla inceledik.",
+        sentence: "Kitap okurken kendimi rengârenk bir otağın içinde hayal ettim.",
+        videoUrl: ""
+      },
+      {
+        id: "ovunc",
+        word: "ÖVÜNÇ",
+        letter: "Ö",
+        type: "İsim",
+        definition: "Övünmeye yol açan, haklı bir gurur ve sevinç kaynağı olan şey veya durum.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Kahraman çocuk, köyünü kurtarıp büyük bir başarı elde ettiğinde bütün halkın en büyük övünç kaynağı olmuştu.",
+        sentence: "Sınıf arkadaşımın yarışmada birinci olması, hepimiz için büyük bir övünç kaynağı oldu.",
+        videoUrl: ""
+      },
+      {
+        id: "pusula",
+        word: "PUSULA",
+        letter: "P",
+        type: "İsim",
+        definition: "Yön göstermeye yarayan, üzerinde kuzey, güney, doğu, batı işaretleri bulunan ve mıknatıslı bir ibresi olan araç.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Ormanda yolunu kaybeden kâşif, cebinden çıkardığı pusulanın ibresine bakarak doğru yönü buldu ve güvenle evine ulaştı.",
+        sentence: "Ormanda yolumuzu kaybetmemek için babamın yanına aldığı eski pusuladan yararlandık.",
+        videoUrl: ""
+      },
+      {
+        id: "ruzgargulu",
+        word: "RÜZGÂRGÜLÜ",
+        letter: "R",
+        type: "İsim",
+        definition: "Rüzgârın yönünü veya hızını göstermeye yarayan ya da rüzgâr enerjisiyle dönerek eğlence veya enerji sağlayan, kanatlı, döner araç.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Bahar rüzgârı esmeye başlayınca çocuklar bahçedeki renkli rüzgârgüllerini ellerine alıp neşeyle koştular; fırıl fırıl dönen çarklar etrafa mutluluk saçtı.",
+        sentence: "Bahçedeki rengârenk rüzgârgülü, hafif bir yel estiğinde dönmeye başladı.",
+        videoUrl: ""
+      },
+      {
+        id: "savci",
+        word: "SAVCI",
+        letter: "S",
+        type: "İsim",
+        definition: "Devlet adına ve kamu yararına davalar açan, suçluların cezalandırılması için iddia makamını temsil eden adalet görevlisi.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Köylülerin hakkını korumak ve haksızlığı önlemek için mahkemede görev yapan adil savcı, gerçeği ortaya çıkarmak için büyük bir titizlikle çalıştı.",
+        sentence: "Adalet sarayına gittiğimizde, savcıların suçluları araştırıp kamu davası açtıklarını öğrendim.",
+        videoUrl: ""
+      },
+      {
+        id: "seruven",
+        word: "SERÜVEN",
+        letter: "S",
+        type: "İsim",
+        definition: "Bilinmeyen, heyecanlı ve genellikle tehlikeli olaylarla dolu yolculuk veya yaşantı; macera.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Cesur çocuk, dedesinden kalan eski ve gizemli haritanın izinden giderek heyecan dolu bir serüvene atıldı; aşılmaz denilen dağları ve ormanları geride bıraktı.",
+        sentence: "Masaldaki cesur çocuk, gizemli haritanın izinden giderek heyecan dolu bir serüvene atıldı.",
+        videoUrl: ""
+      },
+      {
+        id: "senlik",
+        word: "ŞENLİK",
+        letter: "Ş",
+        type: "İsim",
+        definition: "Neşeli, coşkulu ve eğlenceli toplantı veya törenler bütünü; festival.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Bütün kasaba halkı, hasat mevsiminin bitimini meydanda kurulan büyük şenlikte türküler söyleyip halaylar çekerek kutladı.",
+        sentence: "Masaldaki ülkenin insanları, baharın gelişini davul zurnalarla, büyük bir şenlikle kutladılar.",
+        videoUrl: ""
+      },
+      {
+        id: "toy",
+        word: "TOY",
+        letter: "T",
+        type: "İsim",
+        definition: "Eski Türklerde ve göçebe topluluklarda büyük ziyafet, şenlik, kurultay veya meclis.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Hanın verdiği büyük toyda beyler bir araya geldi, boyun geleceği hakkında önemli kararlar alındı.",
+        sentence: "Eski Türklerde beyler önemli kararları toyda alırlardı.",
+        videoUrl: ""
+      },
+      {
+        id: "toren",
+        word: "TÖREN",
+        letter: "T",
+        type: "İsim",
+        definition: "Belli bir amaca, olaya veya güne değer kazandırmak için yapılan, kuralları belirlenmiş resmî veya geleneksel toplantı, merasim.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Masaldaki kahramanın cesaretini kutlamak ve başarıyı taçlandırmak için sarayda büyük bir ödül töreni düzenlendi.",
+        sentence: "Masaldaki küçük kahraman için sarayda büyük bir ödül töreni düzenlendi.",
+        videoUrl: ""
+      },
+      {
+        id: "ufuk",
+        word: "UFUK",
+        letter: "U",
+        type: "İsim",
+        definition: "Düz bir yerde veya açık denizde gökle yerin birleşir gibi göründüğü yer, göz erimi.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Deniz kenarındaki yüksek kuleye çıkan küçük kahraman, masmavi denizin ufuk çizgisinden gelen uzak gemileri heyecanla izledi.",
+        sentence: "Güneş batarken ufuk çizgisi kızıl ve turuncu renklere bürünmüş, harika bir manzara oluşturmuştu.",
+        videoUrl: ""
+      },
+      {
+        id: "ulak",
+        word: "ULAK",
+        letter: "U",
+        type: "İsim",
+        definition: "Haber götüren, ulaştıran kimse; haberci, elçi.",
+        source: "Hikâyeler - Ömer Seyfettin",
+        quote: "Eski zamanlarda uzak illerden haber getiren ulaklar, devletin emirlerini ve en önemli haberleri halka ulaştırmak için at koştururlardı.",
+        sentence: "Masaldaki hızlı ulak, padişahın gizli mektubunu kaleye yetiştirmek için yola çıktı.",
+        videoUrl: ""
+      },
+      {
+        id: "ulke",
+        word: "ÜLKE",
+        letter: "Ü",
+        type: "İsim",
+        definition: "Bir devletin egemenliği altında bulunan toprakların bütünü, yurt, memleket.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Masallardaki uzak ülkede insanlar barış ve dostluk içinde, mutlu bir yaşam sürerlerdi.",
+        sentence: "Öğretmen, dünya haritasında farklı ülkeleri gösterdi.",
+        videoUrl: ""
+      },
+      {
+        id: "vatan",
+        word: "VATAN",
+        letter: "V",
+        type: "İsim",
+        definition: "Bir halkın üzerinde yaşadığı, kültürünü oluşturduğu ve bağımsız olarak egemen olduğu toprak parçası; yurt.",
+        source: "Dede Korkut Hikâyeleri",
+        quote: "Vatanımız sağ olsun, boyumuzun ocağı sönmesin; yiğitlerin kanıyla korunan bu topraklar bize her daim yuva olsun.",
+        sentence: "Masaldaki cesur yiğitler, vatanlarını korumak için el ele verip büyük bir kararlılıkla mücadele ettiler.",
+        videoUrl: ""
+      },
+      {
+        id: "yayla",
+        word: "YAYLA",
+        letter: "Y",
+        type: "İsim",
+        definition: "Dağlık ve yüksek yerlerde, yazın havası serin, suları bol olduğu için geçici süre kalınan, hayvancılık yapılan düzlük.",
+        source: "Heidi - Johanna Spyri",
+        quote: "Heidi, Peter ve keçilerle birlikte yemyeşil yaylaya çıktığında, rengârenk dağ çiçeklerinin kokusunu içine çekti.",
+        sentence: "Yaz tatilinde Karadeniz'deki yaylalara çıktık, serin havada koşan kuzuları izledik.",
+        videoUrl: ""
+      },
+      {
+        id: "yurt",
+        word: "YURT",
+        letter: "Y",
+        type: "İsim",
+        definition: "Bir halkın üzerinde yaşadığı, barındığı, kültürünü ve bağımsızlığını sürdürdüğü toprak parçası; vatan, memleket.",
+        source: "Türk Masalları - Eflatun Cem Güney",
+        quote: "Masallardaki küçük çocuk, ormandaki sevimli evini kendi yurdu olarak görür ve orada mutlu bir hayat sürerdi.",
+        sentence: "Masallardaki kahramanlar, yurtlarını korumak için gece gündüz demeden çalışır ve barış içinde yaşarlardı.",
+        videoUrl: ""
+      },
+      {
+        id: "zanaat",
+        word: "ZANAAT",
+        letter: "Z",
+        type: "İsim",
+        definition: "İnsanların gereksinimlerini karşılamak için yapılan, öğrenimle birlikte deneyim, beceri ve ustalık gerektiren iş.",
+        source: "Pinokyo - Carlo Collodi",
+        quote: "Geppetto Usta, dükkânında sabah akşam demeden çalışır, maharetli elleriyle ahşaba can vererek zanaatını konuştururdu.",
+        sentence: "Zanaat sahibi ustaların el emeği göz nuru eserlerini hayranlıkla izledim. Bu değerli mesleğin sırlarını öğrenmek istedim.",
+        videoUrl: ""
+      },
+      {
+        id: "zenginlik",
+        word: "ZENGİNLİK",
+        letter: "Z",
+        type: "İsim",
+        definition: "Maddi veya manevi bakımdan bol ve değerli şeylere sahip olma durumu, varlıklılık.",
+        source: "Küçük Prens - Antoine de Saint-Exupéry",
+        quote: "İnsanların ne kadar çok parası ya da malı olursa olsun, kalplerinde sevgi ve dostluk yoksa gerçek zenginliği asla bulamazlar.",
+        sentence: "Gerçek zenginlik, insanın içindeki paylaştıkça çoğalan sevgi ve dost biriktirme gücüdür.",
+        videoUrl: ""
+      },
+      {
+        id: "ziyafet",
+        word: "ZİYAFET",
+        letter: "Z",
+        type: "İsim",
+        definition: "Birçok konuğun katıldığı, zengin ve özenli yemek, şölen.",
+        source: "Şehir Faresi ile Tarla Faresi - La Fontaine",
+        quote: "Şehir faresi, misafirini ağırlamak için üzerinde en lezzetli peynirlerin ve çöreklerin bulunduğu mükellef bir ziyafet sofrası kurmuş.",
+        sentence: "Bayramda tüm akrabalar bir araya gelince annem hepimiz için adeta bir ziyafet sofrası hazırladı.",
+        videoUrl: ""
+      }
+    ];
+
+    let activeLetter = "TÜMÜ";
+
+    function initAlphabetBar() {
+      const letters = ["TÜMÜ", ...new Set(wordsData.map(item => item.letter))];
+      const bar = document.getElementById("alphabetBar");
+      bar.innerHTML = letters.map(l => `
+        <button class="letter-btn ${l === activeLetter ? 'active' : ''}" onclick="setLetter('${l}')">${l}</button>
+      `).join("");
+    }
+
+    function setLetter(letter) {
+      activeLetter = letter;
+      initAlphabetBar();
+      filterWords();
+    }
+
+    function filterWords() {
+      const query = document.getElementById("searchInput").value.toLocaleLowerCase('tr-TR').trim();
+      const filtered = wordsData.filter(item => {
+        const matchesLetter = activeLetter === "TÜMÜ" || item.letter === activeLetter;
+        const matchesQuery = 
+          item.word.toLocaleLowerCase('tr-TR').includes(query) ||
+          item.definition.toLocaleLowerCase('tr-TR').includes(query) ||
+          item.source.toLocaleLowerCase('tr-TR').includes(query) ||
+          item.quote.toLocaleLowerCase('tr-TR').includes(query);
+        return matchesLetter && matchesQuery;
+      });
+
+      document.getElementById("wordCounter").textContent = `Gösterilen: ${filtered.length} / ${wordsData.length} Kelime`;
+      renderGrid(filtered);
+    }
+
+    function renderGrid(list) {
+      const grid = document.getElementById("dictionaryGrid");
+      if (list.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; font-weight:700; color:var(--kraft-dark);">Aradığınız kritere uygun kelime bulunamadı.</div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(item => `
+        <article class="word-card" id="${item.id}">
+          <div>
+            <div class="card-header">
+              <h2 class="word-title">${item.word}</h2>
+              <span class="word-type">${item.type}</span>
+            </div>
+            <p class="definition">${item.definition}</p>
+            <div class="quotes-box">
+              <div class="quote-item">
+                <span class="quote-label">Kitap alıntısı (${item.source}):</span> “${item.quote}”
+              </div>
+              <div class="quote-item">
+                <span class="quote-label">Benim cümlem:</span> ${item.sentence}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn-audio ${item.videoUrl ? '' : 'pending'}" onclick="openAudio('${item.id}')">
+              🎙️ Sesli Anlatımı Dinle
+            </button>
+            <button class="btn-share" title="Kelime Bağlantısını Kopyala" onclick="copyLink('${item.id}')">🔗</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function getYoutubeEmbedUrl(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}?autoplay=1` : null;
+    }
+
+    function openAudio(id) {
+      const item = wordsData.find(w => w.id === id);
+      if (!item) return;
+
+      const modal = document.getElementById("videoModal");
+      const title = document.getElementById("modalWordTitle");
+      const body = document.getElementById("modalBody");
+
+      title.textContent = `${item.word} (${item.type}) - Sesli Anlatım`;
+
+      const embedUrl = getYoutubeEmbedUrl(item.videoUrl);
+      if (embedUrl) {
+        body.innerHTML = `
+          <div class="video-frame">
+            <iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <p style="margin-top:12px; font-size:0.95rem;"><strong>Cümlem:</strong> ${item.sentence}</p>
+        `;
+      } else if (item.videoUrl) {
+        window.open(item.videoUrl, "_blank");
+        return;
+      } else if (GENEL_YOUTUBE_PLAYLIST_URL) {
+        window.open(GENEL_YOUTUBE_PLAYLIST_URL, "_blank");
+        return;
+      } else {
+        body.innerHTML = `
+          <div style="padding:18px; background:#f5efe6; border-radius:10px; margin-top:10px;">
+            <p style="font-weight:700; color:var(--accent-orange); margin-bottom:8px;">🎙️ Sesli Okuma Metni:</p>
+            <p style="margin-bottom:8px;"><strong>Anlamı:</strong> ${item.definition}</p>
+            <p style="margin-bottom:8px;"><strong>Kitap alıntısı (${item.source}):</strong> “${item.quote}”</p>
+            <p><strong>Benim cümlem:</strong> ${item.sentence}</p>
+          </div>
+        `;
+      }
+      modal.classList.add("open");
+    }
+
+    function closeVideoModal(e) {
+      const modal = document.getElementById("videoModal");
+      const body = document.getElementById("modalBody");
+      body.innerHTML = "";
+      modal.classList.remove("open");
+    }
+
+    function openAboutModal() {
+      document.getElementById("aboutModal").classList.add("open");
+    }
+
+    function closeAboutModal() {
+      document.getElementById("aboutModal").classList.remove("open");
+    }
+
+    function copyLink(id) {
+      const url = `${window.location.origin}${window.location.pathname}#${id}`;
+      navigator.clipboard.writeText(url);
+      alert("Kelime bağlantısı kopyalandı: " + url);
+    }
+
+    // Sayfa ilk açıldığında çalıştır
+    initAlphabetBar();
+    filterWords();
+  </script>
+</body>
+</html>
